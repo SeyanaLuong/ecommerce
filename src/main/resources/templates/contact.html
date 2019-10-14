@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:insert="fragments/header::header">
+    <title id="title">Contact</title>
+</head>
+
+<body>
+<div class="wrapper">
+    <nav th:insert="fragments/sidebar::sidebar"></nav>
+    <div id="content">
+        <nav th:insert="fragments/navbar::navbar"></nav>
+        <div class="jumbotron" style="font-size: 25px; text-align:center;">
+            <h1 class="display-4">Contact</h1>
+            <p class="lead">Let's talk!</p>
+            <p>Seyana Luong</p>
+            <p>ATLANTA, GA</p>
+            <p><i class="fas fa-envelope"></i> seyanaluong@gmail.com</p>
+            <p><i class="fas fa-address-book"></i><a href="https://seyanaluong.github.io/personal-site/" target="_blank"> Website</a></p>
+            <p>
+                <img src="/images/GitHub-Mark-32px.png" alt=""><a href="https://github.com/SeyanaLuong" target="_blank"> Github</a>
+            </p>
+        </div>
+    </div>
+</div>
+<div th:insert="fragments/footer::footer"></div>
+</body>
+</html>

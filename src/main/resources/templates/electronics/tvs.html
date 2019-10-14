@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:insert="fragments/header::header">
+    <title id="title">TVs</title>
+</head>
+
+<body>
+<div class="wrapper">
+    <nav th:insert="fragments/sidebar::sidebar"></nav>
+    <div id="content">
+        <nav th:insert="fragments/navbar::navbar"></nav>
+        <h1>TVs</h1>
+        <div class="card-deck" id="product-featured"></div>
+    </div>
+</div>
+<div th:insert="fragments/footer::footer"></div>
+<div th:insert="fragments/footer::cards"></div>
+</body>
+</html>

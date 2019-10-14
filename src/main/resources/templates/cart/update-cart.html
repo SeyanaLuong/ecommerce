@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head th:insert="fragments/header::header">
+    <title id="title">Cart</title>
+</head>
+
+<body>
+<div class="wrapper">
+    <nav th:insert="fragments/sidebar::sidebar"></nav>
+    <div id="content" class="container-fluid">
+        <nav th:insert="fragments/navbar::navbar"></nav>
+        <h1>Edit Cart</h1>
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Photo</th>
+                <th scope="col">Department</th>
+                <th scope="col">Category</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Sub Total</th>
+                <th scope="col" class="table-warning"></th>
+                <th scope="col" class="table-danger"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cartMap : ${session.cart}">
+                <th:block th:each="cartItem : ${cartMap}">
+                    <td th:text="${cartItem.value.product.id}"></td>
+                    <td th:text="${cartItem.value.product.name}"></td>
+                    <td><img th:src="${cartItem.value.product.imageUrl}" style="width: 50px;"/></td>
+                    <td th:text="${cartItem.value.product.department}"></td>
+                    <td th:text="${cartItem.value.product.category}"></td>
+                    <td th:text="'$'+${cartItem.value.product.price}"></td>
+                    <td><input th:value="${cartItem.value.quantity}" type="number" name="quantity" min="0" max="99"
+                               onclick="getInput()" onkeyup="getInput()"></td>
+                    <td th:text="'$'+${cartItem.value.product.price * cartItem.value.quantity}" name="subtotal"
+                        th:price="${cartItem.value.product.price}" value=""></td>
+                    <td class="table-warning" align="center">
+                        <a class="btn btn-warning" name="updateLink"
+                           th:value="@{|cart/update/${cartItem.value.product.id}/|}"
+                           th:href="@{|cart/update/${cartItem.value.product.id}/${cartItem.value.quantity}|}">Update</a>
+                    </td>
+                    <td class="table-danger" align="center"><a class="btn btn-danger"
+                                          th:href="@{|cart/remove/${cartItem.value.product.id}|}">Remove</a></td>
+                </th:block>
+            </tr>
+            </tbody>
+        </table>
+        <div align="right">
+            <a class="btn btn-success" th:href="@{/index}">Continue
+                Shopping</a>
+            <a class="btn btn-primary" th:href="@{/cart}">Back to Shopping Cart</a>
+        </div>
+    </div>
+</div>
+<div th:insert="fragments/footer::footer"></div>
+<script th:inline="javascript">
+/*<![CDATA[*/
+
+  function getInput() {
+    var quantity = document.querySelectorAll('[name="quantity"]');
+    var arrayValues = [];
+    quantity.forEach( el => {
+      arrayValues.push(el.value);
+    });
+    var updateLinks = document.querySelectorAll('[name="updateLink"]');
+    for (let index = 0; index < updateLinks.length; index++) {
+      const element = updateLinks[index].getAttribute("value");
+      updateLinks[index].setAttribute("href", element+arrayValues[index]);
+    }
+
+    var subTotals = document.querySelectorAll('[name="subtotal"]');
+    for (let index = 0; index < subTotals.length; index++) {
+        const price = subTotals[index].getAttribute("price");
+        subTotals[index].setAttribute("value", '$'+(price*arrayValues[index]).toFixed(2));
+        subTotals[index].innerText = '$'+(price*arrayValues[index]).toFixed(2);
+        }
+  }
+
+/*]]>*/
+
+</script>
+</body>
+</html>

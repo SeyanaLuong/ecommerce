@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head th:insert="fragments/header::header">
+    <title id="title">Cart</title>
+</head>
+
+<body>
+<div class="wrapper">
+    <nav th:insert="fragments/sidebar::sidebar"></nav>
+    <div id="content" class="container-fluid">
+        <nav th:insert="fragments/navbar::navbar"></nav>
+        <h1>Shopping Cart</h1>
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th scope="col">ID#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Photo</th>
+                <th scope="col">Department</th>
+                <th scope="col">Category</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Sub Total</th>
+                <th scope="col" class="table-danger"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cartMap : ${session.cart}">
+                <th:block th:each="cartItem : ${cartMap}">
+                    <td th:text="${cartItem.value.product.id}"></td>
+                    <td th:text="${cartItem.value.product.name}"></td>
+                    <td><img th:src="${cartItem.value.product.imageUrl}" style="width: 50px;"/></td>
+                    <td th:text="${cartItem.value.product.department}"></td>
+                    <td th:text="${cartItem.value.product.category}"></td>
+                    <td th:text="'$'+${cartItem.value.product.price}"></td>
+                    <td th:text="${cartItem.value.quantity}"></td>
+                    <td th:text="'$'+${cartItem.value.product.price * cartItem.value.quantity}" name="subtotal"
+                        th:value="${cartItem.value.product.price * cartItem.value.quantity}"></td>
+                    <td class="table-danger" align="center">
+                        <a class="btn btn-danger" th:href="@{|cart/remove/${cartItem.value.product.id}|}">Remove</a>
+                    </td>
+                </th:block>
+            </tr>
+            <tr>
+                <td colspan="6"></td>
+                <td><h5>Total</h5></td>
+                <td colspan="2" id="total" class="h5"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div align="right">
+            <a class="btn btn-success" th:href="@{/index}">Continue
+                Shopping</a>
+            <a class="btn btn-warning" id="update" th:href="@{/cart/update}">Update Shopping Cart</a>
+            <a class="btn btn-primary" id="checkout" th:href="@{/cart/checkout}">Checkout</a>
+        </div>
+    </div>
+</div>
+<div th:insert="fragments/footer::footer"></div>
+<script th:inline="javascript">
+/*<![CDATA[*/
+
+  var x = document.getElementsByName("subtotal");
+        var total = 0.0;
+        x.forEach(element => {
+            total += parseFloat(element.getAttribute("value"));
+        });
+        var a = document.getElementById("total");
+        a.textContent = '$'+total.toFixed(2);
+        var checkout = document.getElementById("checkout");
+        var update = document.getElementById("update");
+        if(total == 0) {
+            checkout.setAttribute("style","display:none;");
+            update.setAttribute("style","display:none;");
+        } else {
+            checkout.setAttribute("style","display:inline-block;");
+            update.setAttribute("style","display:inline-block;");
+       }
+/*]]>*/
+
+</script>
+</body>
+</html>
+
+
+

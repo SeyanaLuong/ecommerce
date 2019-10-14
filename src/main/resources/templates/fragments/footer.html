@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<div th:fragment="footer">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+       $(document).ready(function () {
+
+    $("#sidebar").mCustomScrollbar({
+         theme: "minimal"
+    });
+
+    $('#sidebarCollapse').on('click', function () {
+        // open or close navbar
+        $('#sidebar, #content').toggleClass('active');
+        // close dropdowns
+        $('.collapse.in').toggleClass('in');
+        // and also adjust aria-expanded attributes we use for the open/closed arrows
+        // in our CSS
+        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+    });
+
+});
+
+    </script>
+</div>
+<div th:fragment="cards">
+    <script th:inline="javascript">
+/*<![CDATA[*/
+
+  const app = document.getElementById("product-featured");
+        var product = /*[[${products}]]*/ 'default';
+        for (let index = 0; index < product.length; index++) {
+            const element = product[index];
+
+            const card = document.createElement("div");
+            card.setAttribute("class", "card");
+
+            const img = document.createElement("img");
+            img.setAttribute("class", "card-img-top");
+            img.setAttribute("src", element.imageUrl);
+
+            const cardBody = document.createElement("div");
+            cardBody.setAttribute("class", "card-body");
+
+            const cardTitle = document.createElement("h5");
+            cardTitle.setAttribute("class", "card-title");
+            cardTitle.textContent = element.name;
+
+            const cardP1 = document.createElement("p");
+            cardP1.setAttribute("class", "card-text price");
+            cardP1.textContent = "$"+element.price.toFixed(2);
+
+            const cardP2 = document.createElement("p");
+            cardP2.setAttribute("class", "card-text");
+            cardP2.textContent = "Department: "+element.department;
+
+            const cardP3 = document.createElement("p");
+            cardP3.setAttribute("class", "card-text");
+            cardP3.textContent = "Category: "+element.category;
+
+            const cardP4 = document.createElement("p");
+            cardP4.setAttribute("class", "card-text");
+            const cardP4Inner = document.createElement("small")
+            cardP4Inner.textContent = "ID# "+element.id;
+
+            const addCart = document.createElement("a");
+            addCart.setAttribute("class","btn btn-info");
+            addCart.setAttribute("href", "/cart/buy/" +element.id);
+
+            const icon = document.createElement("i");
+            icon.setAttribute("class", "fas fa-cartItem-plus");
+
+            const btnText = document.createTextNode(" Add to Cart");
+
+            app.appendChild(card);
+            card.appendChild(img);
+            card.appendChild(cardBody);
+            cardBody.appendChild(cardTitle);
+            cardBody.appendChild(cardP1);
+            cardBody.appendChild(cardP2);
+            cardBody.appendChild(cardP3);
+            cardBody.appendChild(cardP4);
+            cardP4.appendChild(cardP4Inner);
+            cardBody.appendChild(addCart);
+            addCart.appendChild(icon);
+            addCart.appendChild(btnText);
+        }
+
+/*]]>*/
+
+    </script>
+</div>
+</body>
+</html>

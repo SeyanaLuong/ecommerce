@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:insert="fragments/header::header">
+    <title id="title">Games</title>
+</head>
+
+<body>
+<div class="wrapper">
+    <nav th:insert="fragments/sidebar::sidebar"></nav>
+    <div id="content">
+        <nav th:insert="fragments/navbar::navbar"></nav>
+        <div class="jumbotron" style="font-size: 20px; text-align: center;">
+            <h1 class="display-4">About</h1>
+            <p class="lead">Ecommerce Spring Boot WebApp</p>
+            <p>Developed by Seyana Luong</p>
+            <p>Created for the purpose of learning Spring Boot</p>
+            <div style="font-size: 18px; text-align:left;">
+            <p>Dependencies</p>
+            <ul>
+                <li>H2 Database</li>
+                <li>Lombok</li>
+                <li>Spring Boot DevTools</li>
+                <li>Spring Data JPA</li>
+                <li>Spring Security</li>
+                <li>Spring Web</li>
+                <li>Thymeleaf</li>
+            </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:insert="fragments/footer::footer"></div>
+</body>
+</html>

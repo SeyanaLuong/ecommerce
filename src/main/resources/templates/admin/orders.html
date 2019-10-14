@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:insert="fragments/header::header">
+    <title id="title">Admin/Order</title>
+</head>
+<style>
+   .table-sm td{
+    padding:0px !important;
+    }
+    .table td, .table th {
+    border-top: none !important;
+    }
+    .table tr {
+    border-top: 1px solid #000 !important;
+    }
+    .table .none {
+    border: none !important;
+    }
+</style>
+
+<body>
+<div class="wrapper">
+    <nav th:insert="fragments/sidebar::sidebar"></nav>
+    <div id="content">
+        <nav th:insert="fragments/navbar::navbar"></nav>
+        <h1>Order Table</h1>
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th scope="col">ID#</th>
+                <th scope="col">Date</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Product ID#</th>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Subtotal</th>
+                <th scope="col">Total</th>
+                <th scope="col" class="table-danger"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.id}"></td>
+                    <td th:text="${order.date}"></td>
+                    <td th:text="${order.customer}"></td>
+                    <td>
+                        <table>
+                            <th:block th:each="cartItem : ${order.cartItem}">
+                                <tr class="none">
+                                    <td th:text="${cartItem.product.id}"></td>
+                                </tr>
+                            </th:block>
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            <th:block th:each="cartItem : ${order.cartItem}">
+                                <tr class="none">
+                                    <td th:text="${cartItem.product.name}"></td>
+                                </tr>
+                            </th:block>
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            <th:block th:each="cartItem : ${order.cartItem}">
+                                <tr class="none">
+                                    <td th:text="'$'+${cartItem.product.price}"></td>
+                                </tr>
+                            </th:block>
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            <th:block th:each="cartItem : ${order.cartItem}">
+                                <tr class="none">
+                                    <td th:text="${cartItem.quantity}"></td>
+                                </tr>
+                            </th:block>
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            <th:block th:each="cartItem : ${order.cartItem}">
+                                <tr class="none">
+                                    <td th:value="${cartItem.quantity} * ${cartItem.product.price}" th:text="'$'+${cartItem.quantity} * ${cartItem.product.price}"></td>
+                                </tr>
+                            </th:block>
+                        </table>
+                    </td>
+                    <td th:text="'$'+${order.total}"></td>
+                    <td class="table-danger" align="center"><a class="btn btn-danger" th:href="@{|admin/order/remove/${order.id}|}" onclick="return confirm('Are you sure?')">Remove</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div th:insert="fragments/footer::footer"></div>
+</body>
+</html>

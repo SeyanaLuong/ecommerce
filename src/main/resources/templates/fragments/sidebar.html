@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+    <nav th:fragment="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-store"></i> Eshop</h3>
+        </div>
+        <ul class="list-unstyled components">
+            <h1 th:inline="text" style="text-align:center;"><i class="fas fa-user"></i> [[${#httpServletRequest.remoteUser}]]</h1>
+            <li sec:authorize="hasRole('ADMIN')" id="admin">
+                <a href="#adminSubmenu" data-toggle="collapse" aria-expanded="false"
+                   class="dropdown-toggle"><i class="fas fa-user-shield"></i> Admin</a>
+                <ul class="collapse list-unstyled" id="adminSubmenu">
+                    <li id="products">
+                        <a th:href="@{/admin/product}">View Products</a>
+                    </li>
+                    <li id="orders">
+                        <a th:href="@{/admin/order}">View Orders</a>
+                    </li>
+                    <li id="customers">
+                        <a th:href="@{/admin/customer}">View Customers</a>
+                    </li>
+                </ul>
+            </li>
+            <hr sec:authorize="hasRole('ADMIN')">
+            <li id="home">
+                <a th:href="@{/index}"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li id="cart">
+                <a th:href="@{/cart}"><i class="fas fa-shopping-cart"></i> Shopping Cart </a>
+            </li>
+            <li id="account">
+                <a href="#accountSubMenu" data-toggle="collapse" aria-expanded="false"
+                   class="dropdown-toggle"><i class="fas fa-user-circle"></i> Account</a>
+                <ul class="collapse list-unstyled" id="accountSubMenu">
+                    <li id="account-details">
+                        <a th:href="@{/customer}">Account Details</a>
+                    </li>
+                    <li id="account-orders">
+                        <a th:href="@{/order}">Account Orders</a>
+                    </li>
+                </ul>
+            </li>
+            <li id="furniture">
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false"
+                   class="dropdown-toggle"><i class="fas fa-couch"></i> Furniture</a>
+                <ul class="collapse list-unstyled" id="homeSubmenu">
+                    <li id="fAll">
+                        <a th:href="@{/product/furniture}"><i class="fas fa-chair"></i> All</a>
+                    </li>
+                    <li id="bedroom">
+                        <a th:href="@{/product/furniture/bedroom}"><i class="fas fa-bed"></i> Bedroom</a>
+                    </li>
+                    <li id="bathroom">
+                        <a th:href="@{/product/furniture/bathroom}"><i class="fas fa-bath"></i> Bathroom</a>
+                    </li>
+                    <li id="outdoor">
+                        <a th:href="@{/product/furniture/outdoor}"><i class="fas fa-campground"></i> Outdoor</a>
+                    </li>
+                </ul>
+            </li>
+            <li id="electronics">
+                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
+                   class="dropdown-toggle"><i class="fas fa-charging-station"></i> Electronics</a>
+                <ul class="collapse list-unstyled" id="pageSubmenu">
+                    <li id="eAll">
+                        <a th:href="@{/product/electronics}"><i class="fab fa-d-and-d"></i> All</a>
+                    </li>
+                    <li id="games">
+                        <a th:href="@{/product/electronics/games}"><i class="fas fa-gamepad"></i> Games</a>
+                    </li>
+                    <li id="computers">
+                        <a th:href="@{/product/electronics/computers}"><i class="fas fa-laptop"></i> Computers</a>
+                    </li>
+                    <li id="tvs">
+                        <a th:href="@{/product/electronics/tvs}"><i class="fas fa-tv"></i> TVs</a>
+                    </li>
+                </ul>
+            </li>
+            <li id="about">
+                <a th:href="@{/about}"><i class="fas fa-question-circle"></i> About</a>
+            </li>
+            <li id="contact">
+                <a th:href="@{/contact}"><i class="fas fa-address-book"></i> Contact</a>
+            </li>
+        </ul>
+    </nav>
+</body>
+</html>

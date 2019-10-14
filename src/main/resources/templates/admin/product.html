@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:insert="fragments/header::header">
+    <title id="title">Admin/Product</title>
+</head>
+
+<body>
+<div class="wrapper">
+    <nav th:insert="fragments/sidebar :: sidebar"></nav>
+    <div id="content" class="container-fluid">
+        <nav th:insert="fragments/navbar :: navbar"></nav>
+        <h1>Add Products</h1>
+        <form action="#" th:action="@{/admin/product}" th:object="${product}" method="post">
+            <div class="form-group">
+                <label for="name">Product Name</label>
+                <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Enter product name">
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
+
+            </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="text" th:field="*{price}" class="form-control" id="price" placeholder="Price">
+                <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price Error</p>
+            </div>
+            <div class="form-group">
+                <label for="image">Image</label>
+                <input type="text" th:field="*{imageUrl}" class="form-control" id="image" placeholder="Image URL">
+            </div>
+            <div class="form-group">
+                <label for="department">Department</label>
+                <select class="form-control" id="department" th:field="*{department}" onchange="show()">
+                    <option th:value="electronics" th:text="Electronics"></option>
+                    <option th:value="furniture" th:text="Furniture"></option>
+                </select>
+            </div>
+            <div class="form-group" id="one">
+                <label for="category">Category</label>
+                <select class="form-control" id="category" th:field="*{category}">
+                    <option id="op1" th:value="games" th:text="Games"></option>
+                    <option id="op2" th:value="computers" th:text="Computers"></option>
+                    <option id="op3" th:value="tvs" th:text="TVs"></option>
+                </select>
+            </div>
+            <div align="right">
+                <button type="submit" class="btn btn-primary" onclick="lower()">Submit</button>
+            </div>
+        </form>
+        <h1>Product Table</h1>
+        <table class="table table-striped table-hover table-sm">
+            <thead>
+            <tr>
+                <th scope="col">ID#</th>
+                <th scope="col">Image</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Department</th>
+                <th scope="col">Category</th>
+                <th scope="col">Price</th>
+                <th scope="col" class="table-warning"></th>
+                <th scope="col" class="table-danger"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${products}">
+                <th th:text="${product.id}"></th>
+                <td><img th:src="${product.imageUrl}" style="width: 50px;"/></td>
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.department}"></td>
+                <td th:text="${product.category}"></td>
+                <td th:text="'$'+${product.price}"></td>
+                <td class="table-warning" align="center"><a class="btn btn-warning"
+                                                            th:href="@{|/admin/product/edit/${product.id}|}">Update</a>
+                </td>
+                <td class="table-danger" align="center"><a class="btn btn-danger"
+                                                           th:href="@{|/admin/product/remove/${product.id}|}"
+                                                           onclick="return confirm('Are you sure?')">Remove</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div th:insert="fragments/footer::footer"></div>
+<script th:inline="javascript">
+/*<![CDATA[*/
+
+ function show() {
+       var opt = document.getElementById("department").value;
+       if(opt === 'electronics') {
+           document.getElementById("op1").value = 'games';
+           document.getElementById("op2").value = 'computers';
+           document.getElementById("op3").value = 'tvs';
+           document.getElementById("op1").innerText = 'Games';
+           document.getElementById("op2").innerText = 'Computers';
+           document.getElementById("op3").innerText = 'TVs';
+       } else {
+            document.getElementById("op1").value = 'bedroom';
+           document.getElementById("op2").value = 'bathroom';
+           document.getElementById("op3").value = 'outdoor';
+           document.getElementById("op1").innerText = 'Bedroom';
+           document.getElementById("op2").innerText = 'Bathroom';
+           document.getElementById("op3").innerText = 'Outdoor';
+       }
+   }
+
+
+function lower() {
+    document.getElementById("department").value = document.getElementById("department").value.toLowerCase();
+    document.getElementById("category").value = document.getElementById("category").value.toLowerCase();
+}
+/*]]>*/
+
+</script>
+</body>
+</html>
