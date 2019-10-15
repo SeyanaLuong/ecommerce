@@ -8,7 +8,7 @@ login credentials<br>
 username: admin<br>
 password: admin<br>
 role: admin<br>
-<br><br>
+<br>
 username: user<br>
 password: user<br>
 role: user<br>
