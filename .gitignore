@@ -1,4 +1,7 @@
 HELP.md
+target/
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
 .apt_generated
